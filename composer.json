@@ -1,0 +1,32 @@
+{
+    "name": "jamielsharief/document-store",
+    "description": "Document Store",
+    "type": "library",
+    "keywords": [
+        "nosql",
+        "json",
+        "flatfile",
+        "database"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jamiel Sharief",
+            "email": "js@originphp.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DocumentStore\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DocumentStore\\Test\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=7.4.0",
+        "phpunit/phpunit": "^9.0"
+    }
+}
