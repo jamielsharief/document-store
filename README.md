@@ -121,7 +121,7 @@ $list = $store->list('programming'); // ['programming/0321127420']
 ## Inserting 
 
 If you need the `Document` to have its own ID then you can use the `insert` function,
-which will generate an UUID use this as the key and add this to a `_id` field.
+which will generate an unique ID use this as the key and add this to a `_id` field.
 
 ```php
 use DocumentStore\DocumentStore;
