@@ -30,13 +30,13 @@ class DocumentFinder
      * @example a%, %a, %or%, _r%, a_%, a__%, a%o
      *
      * @param string $like e.g a__de, a%, %a, %or%, _r%, a_%, a__%, a%o
-     * @return string $regex e.g. /^.*bc$/1
+     * @return string $regex e.g. /^.*bc$/i
      */
     private function likeToRegex(string $like): string
     {
         $like = str_replace('_', '.', $like);
 
-        return '/^' .str_replace('%', '.*', $like) . '$/';
+        return '/^' .str_replace('%', '.*', $like) . '$/i';
     }
 
     /**

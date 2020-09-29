@@ -118,10 +118,10 @@ $list = $store->list(); // ['programming/0321127420']
 $list = $store->list('programming'); // ['programming/0321127420']
 ```
 
-## Inserting 
+## Inserting
 
-If you need the `Document` to have its own ID then you can use the `insert` function,
-which will generate an unique ID use this as the key and add this to a `_id` field.
+If you need a `Document` to have its own unique ID then you can use the `insert` function,
+which will generate an unique ID, add a `_id` field and add this to the `DocumentStore` using the ID for the key.
 
 ```php
 use DocumentStore\DocumentStore;
@@ -262,7 +262,7 @@ $conditions = ['age <=' 50];
 
 #### Like
 
-You can use SQL LIKE and NOT LIKES using the wildcard `%` for any chars or `_` for just one character
+You can use SQL LIKE and NOT LIKES using the wildcard `%` for any chars or `_` for just one character, this is a case insensitive search.
 
 ```php
  $conditions = ['authors.name LIKE' =>'Tony%'];
