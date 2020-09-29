@@ -1,0 +1,17 @@
+{
+    "_id": "5f73207ff139d6e504482fd8",
+    "name": "Tim Davis",
+    "age": 28,
+    "emails": [
+        "timmy@example.com",
+        "mr.tim@gmail.com"
+    ],
+    "addreses": [
+        {
+            "street": "20 Foozball Street",
+            "state": "Manchester",
+            "country": "GB"
+        }
+    ],
+    "status": "new"
+}

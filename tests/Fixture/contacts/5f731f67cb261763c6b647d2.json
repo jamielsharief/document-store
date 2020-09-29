@@ -1,0 +1,14 @@
+{
+    "_id": "5f731f67cb261763c6b647d2",
+    "name": "Bill",
+    "age": 50,
+    "emails": [],
+    "addreses": [
+        {
+            "street": "25 Oxford Street",
+            "state": "London",
+            "country": "GB"
+        }
+    ],
+    "status": "archived"
+}

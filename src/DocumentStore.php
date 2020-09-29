@@ -13,6 +13,7 @@
 declare(strict_types = 1);
 namespace DocumentStore;
 
+use BadMethodCallException;
 use DocumentStore\Exception\NotFoundException;
 use DocumentStore\Exception\DocumentStoreException;
 
@@ -139,6 +140,167 @@ class DocumentStore
         }
 
         return $this->scandir($this->path . '/' . $path, $recursive);
+    }
+
+    /**
+     * Searches the DocumentStore and returns a list of keys of Documents that match conditions.
+     *
+     * @param array $params The following options key are supported
+     *  - prefix: default:'' to search a given prefix e.g. books/programming
+     *  - conditions: an array of conditions. e.g. 'name' => 'tony', 'name !=' => 'tony', 'addresses.country'=>['GB','US]
+     *  - limit: default:null limit the number of results
+     *  - offset: default:0 starting position of matching result.
+     * @return array
+     */
+    public function search(array $params = []): array
+    {
+        $params += ['prefix' => '','conditions' => [],'limit' => null,'offset' => 0];
+
+        return $this->findList($params);
+    }
+
+    /**
+     * Find Documents, this is suitable for Documents that were added using the `insert` method. Use search
+     * to search Documents that do not have the _id field. This is because first and all will return the Document
+     * and without the _id field there is no way to know what the key is, if you need it.
+     *
+     *
+     * @param string $finder first, all, list, count
+     * @param array $params The following options key are supported
+     *  - prefix: default:'' to search a given prefix e.g. books/programming
+     *  - conditions: an array of conditions. e.g. 'name' => 'tony', 'name !=' => 'tony', 'addresses.country'=>['GB','US]
+     *  - limit: default:null limit the number of results
+     *  - offset: default:0 starting position of matching result.
+     * @return mixed
+     */
+    public function find(string $finder, array $params = [])
+    {
+        $finderMethod = 'find' . ucfirst($finder);
+
+        if (! method_exists($this, $finderMethod)) {
+            throw new BadMethodCallException('Unkown finder ' . $finder);
+        }
+
+        $params += ['prefix' => '','conditions' => [],'limit' => null,'offset' => 0];
+
+        return $this->$finderMethod($params);
+    }
+
+    /**
+     * Finds the first Document that matches the conditions
+     *
+     * @param array $params
+     * @return DocumentStore\Document|null
+     */
+    protected function findFirst(array $params): ? Document
+    {
+        $finderObject = new DocumentFinder($params['conditions']);
+
+        $count = 0;
+        foreach ($this->list($params['prefix']) as $key) {
+            $document = $this->get($key);
+
+            if ($finderObject ->assertConditions($document)) {
+                if ($count === $params['offset']) {
+                    return $document;
+                }
+                $count++;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds all Documents that match the conditions
+     *
+     * @param array $params
+     * @return array
+     */
+    protected function findAll(array $params): array
+    {
+        $out = [];
+        $finderObject = new DocumentFinder($params['conditions']);
+
+        $count = 0;
+        foreach ($this->list($params['prefix']) as $key) {
+            $document = $this->get($key);
+
+            if ($finderObject ->assertConditions($document)) {
+                if ($count >= $params['offset']) {
+                    $out[] = $document;
+                }
+
+                if ($params['limit'] && count($out) === $params['limit']) {
+                    break;
+                }
+                $count++;
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * Finds a list of keys of Documents that match the conditions
+     *
+     * @param array $params
+     * @return array
+     */
+    protected function findList(array $params): array
+    {
+        $out = [];
+        $finderObject = new DocumentFinder($params['conditions']);
+
+        $count = 0;
+        foreach ($this->list($params['prefix']) as $key) {
+            $document = $this->get($key);
+
+            if ($finderObject ->assertConditions($document)) {
+                if ($count >= $params['offset']) {
+                    $out[] = $key;
+                }
+
+                if ($params['limit'] && count($out) === $params['limit']) {
+                    break;
+                }
+                $count++;
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * Finds the count of documents that need to match the conditions. Don't use this
+     * if you will use findAll after, just use findAll and count the array
+     *
+     * @param array $params
+     * @return integer
+     */
+    protected function findCount(array $params): int
+    {
+        $found = 0;
+
+        $finderObject = new DocumentFinder($params['conditions']);
+
+        $count = 0;
+        foreach ($this->list($params['prefix']) as $key) {
+            $document = $this->get($key);
+
+            if ($finderObject ->assertConditions($document)) {
+                if ($count >= $params['offset']) {
+                    $found++;
+                }
+
+                if ($params['limit'] && $found === $params['limit']) {
+                    break;
+                }
+                $count++;
+            }
+        }
+
+        return $found;
     }
 
     /**

@@ -1,0 +1,21 @@
+{
+    "_id": "5f731f1345b65d076150a7b6",
+    "name": "Tony",
+    "age": 32,
+    "emails": [
+        "tony@stark.com"
+    ],
+    "addreses": [
+        {
+            "street": "1000 malibu drive",
+            "state": "california",
+            "country": "US"
+        },
+        {
+            "street": "25 corp road",
+            "state": "california",
+            "country": "US"
+        }
+    ],
+    "status": "new"
+}

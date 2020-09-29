@@ -6,7 +6,7 @@
     </include>
   </coverage>
   <testsuites>
-    <testsuite name="DocumentStorage">
+    <testsuite name="DocumentStore">
       <directory>./tests/</directory>
     </testsuite>
   </testsuites>

@@ -1,0 +1,14 @@
+{
+    "_id": "5f731fb442a25e9f7765f929",
+    "name": "Jim",
+    "age": 30,
+    "emails": [],
+    "addreses": [
+        {
+            "street": "12 Regent Street",
+            "state": "London",
+            "country": "GB"
+        }
+    ],
+    "status": "approved"
+}

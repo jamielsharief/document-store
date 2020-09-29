@@ -1,0 +1,17 @@
+{
+    "_id": "5f7320135e9d29aebacd4f97",
+    "name": "Claire",
+    "age": 25,
+    "emails": [
+        "claire@yahoo.com",
+        "cbear@hotmail.com"
+    ],
+    "addreses": [
+        {
+            "street": "19 Pinewood Rd",
+            "state": "Slough",
+            "country": "GB"
+        }
+    ],
+    "status": "pending"
+}

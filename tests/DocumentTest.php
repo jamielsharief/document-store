@@ -1,4 +1,17 @@
 <?php
+/**
+ * DocumentStore
+ * Copyright 2020 Jamiel Sharief.
+ *
+ * Licensed under The MIT License
+ * The above copyright notice and this permission notice shall be included in all copies or substantial
+ * portions of the Software.
+ *
+ * @copyright   Copyright (c) Jamiel Sharief
+ * @license     https://opensource.org/licenses/mit-license.php MIT License
+ */
+declare(strict_types = 1);
+namespace DocumentStore\Test;
 
 use DocumentStore\Document;
 use PHPUnit\Framework\TestCase;
@@ -91,5 +104,40 @@ class DocumentTest extends TestCase
         $expected = "{\n    \"name\": \"foo\",\n    \"description\": \"bar\"\n}";
 
         $this->assertEquals($expected, (string) $document);
+    }
+
+    public function testSetState()
+    {
+        $document = Document::__set_state(['foo' => 'bar']);
+        $this->assertEquals('bar', $document->foo);
+    }
+
+    public function testJsonSerialize()
+    {
+        $data = ['foo' => 'bar'];
+        $document = new Document($data);
+        $this->assertEquals($data, $document->jsonSerialize());
+    }
+
+    public function testDebugInfo()
+    {
+        $data = ['foo' => 'bar'];
+        $document = new Document($data);
+        $this->assertEquals($data, $document->__debugInfo());
+    }
+
+    public function testSerialize()
+    {
+        $document = new Document(['foo' => 'bar']);
+        $this->assertEquals('a:1:{s:3:"foo";s:3:"bar";}', $document->serialize());
+    }
+    
+    public function testUnserialize()
+    {
+        //['foo' => 'bar']
+        $document = new Document();
+        $document->unserialize('a:1:{s:3:"foo";s:3:"bar";}');
+        
+        $this->assertEquals(['foo' => 'bar'], $document->toArray());
     }
 }
