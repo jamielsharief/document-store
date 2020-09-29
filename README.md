@@ -217,12 +217,14 @@ Lets say you have this data
 }
 ```
 
-Here are some examples how to search the fields
+Here are some examples how to search the the different levels of fields;
 
-```
-name // Tony Stark
-emails // tony@stark.com
-addresses.street // 25 corp road or 1000 malibu drive
+```php
+$conditions = [
+    'name' => 'Tony Stark' // searches string
+    'emails' => 'tony@stark.com', // searches data array
+    'addresses.street' => '1000 malibu drive' // searches for key in numerical etc
+];
 ```
 
 ### Conditions
@@ -281,7 +283,7 @@ $result = $store->find('first', [
         'author' => ['Mark Minervini']
     ],
 ]);
-/* 
+/*
 DocumentStore\Document Object
 (
     [_id] => 5f730fd6ed12968109f89d0d
