@@ -1,4 +1,4 @@
-# DocumentStore
+# DocumentStore (Beta)
 
 ![license](https://img.shields.io/badge/license-MIT-brightGreen.svg)
 [![build](https://travis-ci.org/jamielsharief/document-store.svg?branch=master)](https://travis-ci.org/jamielsharief/document-store)
