@@ -15,7 +15,7 @@ namespace DocumentStore;
 
 use DocumentStore\Exception\DocumentStoreException;
 
-class DocumentFinder
+class Assert
 {
     private $conditions = [];
 
@@ -46,10 +46,10 @@ class DocumentFinder
      * @param array $conditions
      * @return boolean
      */
-    public function assertConditions(Document $document): bool
+    public function conditions(Document $document): bool
     {
         foreach ($this->conditions as $condition) {
-            if (! $this->assertCondition($document, $condition)) {
+            if (! $this->condition($document, $condition)) {
                 return false;
             }
         }
@@ -64,7 +64,7 @@ class DocumentFinder
      * @param array $condition
      * @return boolean
      */
-    private function assertCondition(Document $document, array $condition): bool
+    private function condition(Document $document, array $condition): bool
     {
         $value = $this->getValue($condition['field'], $document->toArray());
         
@@ -246,15 +246,5 @@ class DocumentFinder
         }
 
         return $document;
-    }
-
-    /**
-     * Returns the parsed conditions
-     *
-     * @return array
-     */
-    public function conditions(): array
-    {
-        return $this->conditions;
     }
 }

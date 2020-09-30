@@ -194,13 +194,13 @@ class DocumentStore
      */
     protected function findFirst(array $params): ? Document
     {
-        $finderObject = new DocumentFinder($params['conditions']);
+        $assert = new Assert($params['conditions']);
 
         $count = 0;
         foreach ($this->list($params['prefix']) as $key) {
             $document = $this->get($key);
 
-            if ($finderObject ->assertConditions($document)) {
+            if ($assert->conditions($document)) {
                 if ($count === $params['offset']) {
                     return $document;
                 }
@@ -220,13 +220,13 @@ class DocumentStore
     protected function findAll(array $params): array
     {
         $out = [];
-        $finderObject = new DocumentFinder($params['conditions']);
+        $assert = new Assert($params['conditions']);
 
         $count = 0;
         foreach ($this->list($params['prefix']) as $key) {
             $document = $this->get($key);
 
-            if ($finderObject ->assertConditions($document)) {
+            if ($assert->conditions($document)) {
                 if ($count >= $params['offset']) {
                     $out[] = $document;
                 }
@@ -250,13 +250,13 @@ class DocumentStore
     protected function findList(array $params): array
     {
         $out = [];
-        $finderObject = new DocumentFinder($params['conditions']);
+        $assert = new Assert($params['conditions']);
 
         $count = 0;
         foreach ($this->list($params['prefix']) as $key) {
             $document = $this->get($key);
 
-            if ($finderObject ->assertConditions($document)) {
+            if ($assert->conditions($document)) {
                 if ($count >= $params['offset']) {
                     $out[] = $key;
                 }
@@ -282,13 +282,13 @@ class DocumentStore
     {
         $found = 0;
 
-        $finderObject = new DocumentFinder($params['conditions']);
+        $assert = new Assert($params['conditions']);
 
         $count = 0;
         foreach ($this->list($params['prefix']) as $key) {
             $document = $this->get($key);
 
-            if ($finderObject ->assertConditions($document)) {
+            if ($assert->conditions($document)) {
                 if ($count >= $params['offset']) {
                     $found++;
                 }
