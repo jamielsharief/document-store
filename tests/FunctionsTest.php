@@ -51,6 +51,7 @@ class FunctionsTest extends TestCase
         $this->assertTrue(cache_has('delete'));
         $this->assertTrue(cache_delete('delete'));
         $this->assertFalse(cache_has('delete'));
+        $this->assertFalse(cache_delete('delete'));
     }
 
     public function testClear()

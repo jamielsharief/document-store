@@ -53,6 +53,14 @@ class DocumentDatabaseTest extends TestCase
         @unlink($this->storage_path('books/'. $document2->_id . '.json'));
     }
 
+    public function testInsertErrorSaving()
+    {
+        $db = new DocumentDatabase($this->storage_path('books'));
+        $this->expectException(DocumentStoreException::class);
+        $document = new Document(['_id' => 1234]);
+        $this->assertFalse($db->insertMany([$document]));
+    }
+
     public function testInsertManyException()
     {
         $db = new DocumentDatabase($this->storage_path('books'));
