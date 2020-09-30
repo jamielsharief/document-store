@@ -1,5 +1,9 @@
 # DocumentStore
 
+![license](https://img.shields.io/badge/license-MIT-brightGreen.svg)
+[![build](https://travis-ci.org/jamielsharief/document-store.svg?branch=master)](https://travis-ci.org/jamielsharief/document-store)
+[![coverage](https://coveralls.io/repos/github/jamielsharief/document-store/badge.svg?branch=master)](https://coveralls.io/github/jamielsharief/document-store?branch=master)
+
 DocumentStore is a Key-Value Store (KVS) for storing data documents which can have the same or varying fields and works with arrays and nested data.
 
 ## Creating a Document
@@ -118,10 +122,9 @@ $list = $store->list(); // ['programming/0321127420']
 $list = $store->list('programming'); // ['programming/0321127420']
 ```
 
-## Inserting
+## Insert
 
-If you need a `Document` to have its own unique ID then you can use the `insert` function,
-which will generate an unique ID, add a `_id` field and add this to the `DocumentStore` using the ID for the key.
+Insert is a convenience function which first generates a unique ID, adds an `_id` field  to the `Document`, then adds this to the `DocumentStore` using the ID as the key.
 
 ```php
 use DocumentStore\DocumentStore;
