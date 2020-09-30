@@ -15,6 +15,12 @@ declare(strict_types = 1);
 use DocumentStore\Document;
 
 /**
+ * This has been added to Master branch but not included in the release, this would be configured
+ * in composer.json, however I am currently undecided if this should be added or not since the original
+ * concept was to use var_export, but it was actually slower than this, at least on small objects.
+ */
+
+/**
  * Sets a Document in the cache
  *
  * @param string $key
