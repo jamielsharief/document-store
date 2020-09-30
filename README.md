@@ -168,7 +168,7 @@ $id = $store->insert($document, [
 
 ## Searching
 
-You can also search `Documents` in the `DocumentStore`, this is a file based searched for convienience. So if you have millions of Documents or perform large amounts of searches maybe an indexing software like `Elasticsearch` or `Solr` might be worth looking at.
+You can also search `Documents` in the `DocumentStore`, this is a file based searched . So if you have 100,000s of Documents in aprefix or regularly perform large amounts of searches and speed is an issue,  maybe an indexing software like `Elasticsearch` or `Solr` might be worth looking at.
 
 ### Keys
 
