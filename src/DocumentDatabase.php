@@ -92,7 +92,7 @@ class DocumentDatabase extends BaseStorage
     {
         $out = [];
         foreach ($documents as $document) {
-            if ($document instanceof Document) {
+            if (! $document instanceof Document) {
                 throw new DocumentStoreException('Invalid Document');
             }
             if (empty($document->_id) || ! $this->doSet($document->_id, $document)) {

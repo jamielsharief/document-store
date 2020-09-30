@@ -16,6 +16,7 @@ namespace DocumentStore\Test;
 use DocumentStore\Document;
 use PHPUnit\Framework\TestCase;
 use DocumentStore\DocumentDatabase;
+use DocumentStore\Exception\DocumentStoreException;
 
 class DocumentDatabaseTest extends TestCase
 {
@@ -34,6 +35,12 @@ class DocumentDatabaseTest extends TestCase
         @unlink($file);
     }
 
+    public function testInsertFail()
+    {
+        $db = new DocumentDatabase($this->storage_path('books'));
+        $this->assertFalse($db->insert(new Document(['_id' => 1234])));
+    }
+
     public function testInsertMany()
     {
         $db = new DocumentDatabase($this->storage_path('books'));
@@ -46,7 +53,14 @@ class DocumentDatabaseTest extends TestCase
         @unlink($this->storage_path('books/'. $document2->_id . '.json'));
     }
 
-    public function update()
+    public function testInsertManyException()
+    {
+        $db = new DocumentDatabase($this->storage_path('books'));
+        $this->expectException(DocumentStoreException::class);
+        $db->insertMany(['foo']);
+    }
+
+    public function testUpdate()
     {
         $db = new DocumentDatabase($this->storage_path('books'));
         $document = new Document(['name' => 'test']);
@@ -63,7 +77,13 @@ class DocumentDatabaseTest extends TestCase
         @unlink($this->storage_path('books/'. $document->_id . '.json'));
     }
 
-    public function updateMany()
+    public function testUpdateFail()
+    {
+        $db = new DocumentDatabase($this->storage_path('books'));
+        $this->assertFalse($db->update(new Document(['name' => 'no_id'])));
+    }
+
+    public function testUpdateMany()
     {
         $db = new DocumentDatabase($this->storage_path('books'));
         
@@ -81,6 +101,20 @@ class DocumentDatabaseTest extends TestCase
 
         @unlink($this->storage_path('books/'. $document1->_id . '.json'));
         @unlink($this->storage_path('books/'. $document2->_id . '.json'));
+    }
+
+    public function testUpdateManyInvalidDocument()
+    {
+        $db = new DocumentDatabase($this->storage_path('books'));
+        $this->expectException(DocumentStoreException::class);
+        $db->updateMany(['foo']);
+    }
+
+    public function testUpdateManyNotInDatabase()
+    {
+        $db = new DocumentDatabase($this->storage_path('books'));
+        $this->expectException(DocumentStoreException::class);
+        $db->updateMany([new Document(['name' => 'not in database'])]);
     }
 
     private function storage_path(string $path): string
