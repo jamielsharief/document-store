@@ -18,7 +18,7 @@ use DocumentStore\Exception\DocumentStoreException;
 /**
  * An adapter which converts the DocumentStore into a Document Database
  */
-class DocumentDatabase extends DocumentStore
+class DocumentDatabase extends BaseStorage
 {
     /**
     * Inserts a Document into the DocumentStore with a unique ObjectID, this will be
@@ -38,7 +38,7 @@ class DocumentDatabase extends DocumentStore
 
             $path = $options['prefix'] ? trim($options['prefix'], '/') . '/' : null;
     
-            return $this->set($path . $document->id(), $document);
+            return $this->doSet($path . $document->id(), $document);
         }
 
         return false;
@@ -76,7 +76,7 @@ class DocumentDatabase extends DocumentStore
     public function update(Document $document): bool
     {
         if (! empty($document->_id)) {
-            return $this->set($document->_id, $document);
+            return $this->doSet($document->_id, $document);
         }
 
         return false;
@@ -95,7 +95,7 @@ class DocumentDatabase extends DocumentStore
             if ($document instanceof Document) {
                 throw new DocumentStoreException('Invalid Document');
             }
-            if (empty($document->_id) || ! $this->set($document->_id, $document)) {
+            if (empty($document->_id) || ! $this->doSet($document->_id, $document)) {
                 throw new DocumentStoreException('Error updating Document');
             }
             $out[] = $document->_id;
