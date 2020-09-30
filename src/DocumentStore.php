@@ -52,7 +52,7 @@ class DocumentStore
             throw new DocumentStoreException('JSON decoding data Error: ' . json_last_error());
         }
 
-        return new Document($data);
+        return new Document($data, ['key' => $id]);
     }
 
     /**
@@ -75,30 +75,6 @@ class DocumentStore
         }
 
         return false;
-    }
-
-    /**
-     * Inserts a Document into the DocumentStore with a unique ObjectID, this will be
-     * added to the Document and used as the key. On success it will return the ObjectID
-     *
-     * @param DocumentStore\Document $document
-     * @param array $options
-     *  - prefix: default:null where to create the Document contacts or europe/contacts
-     * @return string|null $objectID
-     */
-    public function insert(Document $document, array $options = []): ?string
-    {
-        $options += ['prefix' => null];
-
-        $document->id($this->objectId());
-
-        $path = $options['prefix'] ? trim($options['prefix'], '/') . '/' : null;
-
-        if ($this->set($path . $document->id(), $document)) {
-            return $document->id();
-        }
-
-        return null;
     }
 
     /**
@@ -318,7 +294,7 @@ class DocumentStore
      * @return void
      * @throws DocumentStore\NotFoundException
      */
-    private function checkExists(string $id): void
+    protected function checkExists(string $id): void
     {
         if (! file_exists($this->filename($id))) {
             throw new NotFoundException('Not found');
@@ -331,7 +307,7 @@ class DocumentStore
      * @param string $id
      * @return string
      */
-    private function filename(string $key): string
+    protected function filename(string $key): string
     {
         return $this->path . '/' . $key . '.json';
     }
@@ -340,7 +316,7 @@ class DocumentStore
      * @param string $directory
      * @return void
      */
-    private function createDirectoryIfNotExists(string $directory): void
+    protected function createDirectoryIfNotExists(string $directory): void
     {
         if (! is_dir($directory)) {
             mkdir($directory, 0775, true);
@@ -356,7 +332,7 @@ class DocumentStore
      * @param string $directory
      * @return array
      */
-    private function scandir(string $directory, bool $recursive = true): array
+    protected function scandir(string $directory, bool $recursive = true): array
     {
         $out = [];
         foreach (array_diff(scandir($directory), ['.', '..']) as $filename) {

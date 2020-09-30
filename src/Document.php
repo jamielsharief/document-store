@@ -21,14 +21,29 @@ class Document implements ArrayAccess, JsonSerializable, Serializable
 {
     /**
      * Holds the documentData
-     *
-     * @var array
      */
-    protected $documentData = [];
+    protected array $documentData = [];
 
-    public function __construct(array $data = [])
+    /**
+     * Key used to save this file
+     */
+    private ?string $key;
+
+    public function __construct(array $data = [], array $options = [])
     {
+        $options += ['key' => null];
         $this->documentData = $data;
+        $this->key = $options['key'];
+    }
+
+    /**
+     * Returns the key used to save this Document in the DocumentStore
+     *
+     * @return string|null
+     */
+    public function key(): ?string
+    {
+        return $this->key;
     }
 
     /**

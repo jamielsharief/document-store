@@ -45,38 +45,6 @@ class DocumentStoreTest extends TestCase
         $this->assertFileExists($this->storage_path('books/business/book.json'));
     }
 
-    public function testInsert()
-    {
-        $store = new DocumentStore($this->storage_path('books'));
-        $document = new Document();
-        $document->name = 'foo';
-
-        $uuid = $store->insert($document);
-        $this->assertNotEmpty($uuid);
-
-        $this->assertMatchesRegularExpression('/^[0-9a-f]{24}+/', $uuid);
-        $this->assertEquals($uuid, $document->id());
-        $this->assertEquals($uuid, $document->_id);
-
-        $file = $this->storage_path('books/'. $document->_id . '.json');
-        $this->assertFileExists($file);
-        @unlink($file);
-    }
-
-    public function testInsertDeep()
-    {
-        $store = new DocumentStore($this->storage_path('books'));
-        $document = new Document();
-        $document->name = 'foo';
-  
-        $uuid = $store->insert($document, ['prefix' => 'general']);
-        $this->assertNotEmpty($uuid);
-
-        $file = $this->storage_path('books/general/'. $document->_id . '.json');
-        $this->assertFileExists($file);
-        @unlink($file);
-    }
-
     public function testHas(): void
     {
         $store = new DocumentStore($this->storage_path('books'));
@@ -97,6 +65,7 @@ class DocumentStoreTest extends TestCase
         $document = $store->get('demo');
         $this->assertInstanceOf(Document::class, $document);
         $this->assertEquals('foo', $document->name);
+        $this->assertEquals('demo', $document->key());
     }
 
     public function testGetDeep(): void

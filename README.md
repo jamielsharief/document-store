@@ -4,7 +4,7 @@
 [![build](https://travis-ci.org/jamielsharief/document-store.svg?branch=master)](https://travis-ci.org/jamielsharief/document-store)
 [![coverage](https://coveralls.io/repos/github/jamielsharief/document-store/badge.svg?branch=master)](https://coveralls.io/github/jamielsharief/document-store?branch=master)
 
-DocumentStore is a Key-Value Store (KVS) for storing data documents which can have the same or varying fields and works with arrays and nested data.
+DocumentStore is a Key-Value Store (KVS) for storing data documents which can have the same or varying fields and works with arrays and nested data.  
 
 ## Creating a Document
 
@@ -122,53 +122,10 @@ $list = $store->list(); // ['programming/0321127420']
 $list = $store->list('programming'); // ['programming/0321127420']
 ```
 
-## Insert
-
-Insert is a convenience function which first generates a unique ID, adds an `_id` field  to the `Document`, then adds this to the `DocumentStore` using the ID as the key.
-
-```php
-use DocumentStore\DocumentStore;
-use DocumentStore\Document;
-
-$store = new DocumentStore(storage_path('books'));
-
-$document = new Document();
-$document->title = 'Patterns of Enterprise Application Architecture';
-$document->author = 'Martin Fowler';
-$document->type = 'hardcover';
-$document->isbn = '0321127420';
-
-$id = $store->insert($document);
-```
-
-It will return the ID which was also used as the key, we can can then retrieve the Document
-
-```php
-print_r($store->get($id));
-
-/*
-DocumentStore\Document Object
-(
-    [_id] => 5f70951f2c7d2d8ba290f708
-    [title] => Patterns of Enterprise Application Architecture
-    [author] => Martin Fowler
-    [type] => hardcover
-    [isbn] => 0321127420
-)
-*/
-```
-
-You can also insert into a particular path
-
-```php
-$id = $store->insert($document, [
-    'prefix' => 'computing/programming'
-]); // computing/programming/5f70951f2c7d2d8ba290f708
-```
 
 ## Searching
 
-You can also search `Documents` in the `DocumentStore`, this is a file based searched . So if you have 100,000s of Documents in aprefix or regularly perform large amounts of searches and speed is an issue,  maybe an indexing software like `Elasticsearch` or `Solr` might be worth looking at.
+You can also search `Documents` in the `DocumentStore`, this is a file based searched . So if you have 100,000s of Documents in a prefix or regularly perform large amounts of searches and speed is an issue,  maybe an indexing software like `Elasticsearch` or `Solr` might be worth looking at.
 
 ### Keys
 
@@ -274,9 +231,9 @@ You can use SQL LIKE and NOT LIKES using the wildcard `%` for any chars or `_` f
 
 ### Finders
 
-#### First
+You can use the `key` method on any document found using `first` or `all` to find what key was used to save that `Document`.
 
-> First finder returns the actual Document if found and not the key, so this is more suitable for Documents added using insert
+#### First
 
 To find the first `Document` that matches a set of conditions
 
@@ -294,11 +251,11 @@ DocumentStore\Document Object
     [author] => Mark Minervini
 )
 */
+
 ```
 
 ### All
 
-> All finder returns an array of Documents and not the keys, so this is more suitable for Documents added using insert
 
 To find all `Documents` that match a set of conditions
 
@@ -341,4 +298,54 @@ $count = $store->find('count', [
         'author' => ['Mark Minervini']
     ],
 ]); // 3
+```
+
+## Document Database
+
+There is a `DocumentDatabase` adapter which uses the `DocumentStore` as the backend, but makes it work similar to a database, such as generating keys, saving multiple records etc. 
+
+## Insert
+
+Insert first generates a unique ID, adds an `_id` field  to the `Document`, then adds this to the `DocumentStore` using the ID as the key.
+
+```php
+use DocumentStore\DocumentDatabase;
+use DocumentStore\Document;
+
+$db = new DocumentDatabase(storage_path('books'));
+
+$document = new Document();
+$document->title = 'Patterns of Enterprise Application Architecture';
+$document->author = 'Martin Fowler';
+$document->type = 'hardcover';
+$document->isbn = '0321127420';
+
+$db->insert($document);
+
+/*
+DocumentStore\Document Object
+(
+    [_id] => 5f70951f2c7d2d8ba290f708
+    [title] => Patterns of Enterprise Application Architecture
+    [author] => Martin Fowler
+    [type] => hardcover
+    [isbn] => 0321127420
+)
+*/
+```
+
+You can also insert into a particular path
+
+```php
+$db->insert($document, [
+    'prefix' => 'computing/programming'
+]); // computing/programming/5f70951f2c7d2d8ba290f708
+```
+
+## Update
+
+When you are working with `Documents` that have already been saved in the `DocumentDatabase`, and have an `_id` field you can save any changes using the `update` method.
+
+```php
+$store->update($document);
 ```
