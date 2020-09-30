@@ -4,7 +4,7 @@
 [![build](https://travis-ci.org/jamielsharief/document-store.svg?branch=master)](https://travis-ci.org/jamielsharief/document-store)
 [![coverage](https://coveralls.io/repos/github/jamielsharief/document-store/badge.svg?branch=master)](https://coveralls.io/github/jamielsharief/document-store?branch=master)
 
-DocumentStore is a Key-Value Store (KVS) for storing data documents which can have the same or varying fields and works with arrays and nested data.  
+DocumentStore is a Key-Value Store (KVS) that stores data in JSON documents, giving you a productive way to work with simple or nested data and allows for felxible and dynamic schema. Data can easily be synced across multiple servers. This provides a consistent interface for working with JSON data as a no sql database.
 
 ## Creating a Document
 
