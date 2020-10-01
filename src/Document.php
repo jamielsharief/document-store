@@ -171,7 +171,7 @@ class Document implements ArrayAccess, JsonSerializable, Serializable
     * @param string $id
     * @return string|null
     */
-    public function id(string $id = null): ?string
+    public function _id(string $id = null): ?string
     {
         if ($id) {
             $this->documentData = ['_id' => $id] + $this->documentData;

@@ -34,11 +34,11 @@ class DocumentDatabase extends BaseStorage
         $options += ['prefix' => null];
 
         if (empty($document->_id)) {
-            $document->id($this->objectId());
+            $document->_id($this->objectId());
 
             $path = $options['prefix'] ? trim($options['prefix'], '/') . '/' : null;
     
-            return $this->doSet($path . $document->id(), $document);
+            return $this->doSet($path . $document->_id(), $document);
         }
 
         return false;
