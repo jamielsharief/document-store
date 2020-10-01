@@ -230,7 +230,7 @@ Here are some examples how to search the the different levels of fields;
 $conditions = [
     'name' => 'Tony Stark' // searches string
     'emails' => 'tony@stark.com', // searches data array
-    'addresses.street' => '1000 malibu drive' // searches for key in numerical etc
+    'addresses.street' => '1000 malibu drive' // searches the street fields in addresses etc
 ];
 ```
 
