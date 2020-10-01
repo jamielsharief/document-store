@@ -59,7 +59,7 @@ $store = new DocumentStore(storage_path('books'));
 
 $document = new Document();
 $document->title = 'Patterns of Enterprise Application Architecture';
-$document->author = 'Martin Fowler'
+$document->author = 'Martin Fowler';
 $document->type = 'hardcover';
 $document->isbn = [
     '978-0321127426',
