@@ -253,7 +253,7 @@ You can check single or multiple values (NOT IN)
 
 ```php
 $conditions = ['author !=' => 'Dean Koontz']
-$conditions = ['author !=' => ['Steven King','Dean Koontz']
+$conditions = ['author !=' => ['Steven King','Dean Koontz']]
 ```
 
 #### Arithmetic
