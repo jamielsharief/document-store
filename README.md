@@ -128,7 +128,7 @@ $list = $store->list('programming'); // ['programming/0321127420']
 ### Key
 
 If you are working a `Document` that was stored in the `DocumentStore`, you can use the `key` method
-to get the key that was used. This is handy for when working with search results
+to get the key that was used. This is handy for when working with search results from find first or find all.
 
 ```php
 $key = $document->key();
