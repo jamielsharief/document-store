@@ -88,6 +88,12 @@ $document = $store->get('0321127420');
 echo $document->title;
 ```
 
+To get a `Document` with a prefix
+
+```php
+$document = $store->get('programming/0321127420');
+```
+
 ## Has
 
 To check a `Document` exists
@@ -99,6 +105,12 @@ $store = new DocumentStore(storage_path('books'));
 $result = $store->has('0321127420');
 ```
 
+To check a `Document` with a prefix
+
+```php
+$store->has('programming/0321127420');
+```
+
 ## Delete
 
 To delete a `Document` from the `DocumentStore`
@@ -108,6 +120,12 @@ use DocumentStore\DocumentStore;
 $store = new DocumentStore(storage_path('books'));
 
 $store->delete('0321127420');
+```
+
+To delete a `Document` with a prefix
+
+```php
+$store->delete('programming/0321127420');
 ```
 
 ## List
