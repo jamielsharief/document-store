@@ -70,7 +70,7 @@ class BaseStorage
 
         $tmpfile = sys_get_temp_dir() . '/' . uniqid() . '.tmp';
 
-        if (file_put_contents($tmpfile, $document->toJson(['pretty' => true]), LOCK_EX)) {
+        if (file_put_contents($tmpfile, $document, LOCK_EX)) {
             return rename($tmpfile, $this->filename($key));
         }
 
