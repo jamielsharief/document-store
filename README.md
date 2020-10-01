@@ -122,6 +122,35 @@ $list = $store->list(); // ['programming/0321127420']
 $list = $store->list('programming'); // ['programming/0321127420']
 ```
 
+## Document
+
+
+### Key
+
+If you are working a `Document` that was stored in the `DocumentStore`, you can use the `key` method
+to get the key that was used. This is handy for when working with search results
+
+```php
+$key = $document->key();
+```
+
+
+### To Array
+
+To convert the `Document` into an array
+
+```php
+$document->toArray();
+```
+
+#### To Json
+
+To convert the `Document` into a JSON string
+
+```php
+$document->toJson();
+$document->toJson(['pretty' => true]);
+```
 
 ## Searching
 
