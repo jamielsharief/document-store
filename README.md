@@ -4,7 +4,7 @@
 [![build](https://travis-ci.org/jamielsharief/document-store.svg?branch=master)](https://travis-ci.org/jamielsharief/document-store)
 [![coverage](https://coveralls.io/repos/github/jamielsharief/document-store/badge.svg?branch=master)](https://coveralls.io/github/jamielsharief/document-store?branch=master)
 
-DocumentStore is a Key-Value Store (KVS) that stores data in JSON documents, giving you a productive way to work with simple or nested data and allows for felxible and dynamic schema. Data can easily be synced across multiple servers. This provides a consistent interface for working with JSON data as a no sql database.
+DocumentStore is a Key-Value Store (KVS) that stores data in JSON documents, giving you a productive way to work with simple or nested data and allows for felxible and dynamic schema. Data can easily be synced across multiple servers. This provides a consistent interface for working with JSON data as a no SQL database.
 
 ## Creating a Document
 
@@ -389,10 +389,23 @@ $db->insert($document, [
 ]); // computing/programming/5f70951f2c7d2d8ba290f708
 ```
 
+
+There is also an `insertMany` method
+
+```php
+$db->insertMany([$document]);
+```
+
 ## Update
 
 When you are working with `Documents` that have already been saved in the `DocumentDatabase`, and have an `_id` field you can save any changes using the `update` method.
 
 ```php
-$store->update($document);
+$db->update($document);
+```
+
+There is also an `updateMany` method
+
+```php
+$db->updateMany([$document]);
 ```
