@@ -199,7 +199,9 @@ class Document implements ArrayAccess, JsonSerializable, Serializable
     public function toJson(array $options = []): string
     {
         $options += ['pretty' => false];
-
+        /**
+         * JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK
+         */
         return json_encode($this->documentData, $options['pretty'] ? JSON_PRETTY_PRINT : 0);
     }
 
@@ -287,7 +289,7 @@ class Document implements ArrayAccess, JsonSerializable, Serializable
      */
     public function __toString()
     {
-        return json_encode($this->documentData, JSON_PRETTY_PRINT);
+        return json_encode($this->documentData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
     }
 
     /**
