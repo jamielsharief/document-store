@@ -21,6 +21,8 @@ use DocumentStore\Exception\NotFoundException;
 
 class DocumentStoreTest extends TestCase
 {
+    use DocumentStoreTestTrait;
+
     public function testSet(): void
     {
         @unlink($this->storage_path('books/demo.json'));

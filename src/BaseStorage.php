@@ -25,11 +25,16 @@ class BaseStorage
     private string $path;
 
     /**
+     *
+     * The initial path must exist and be writeable
+     *
      * @param string $path path to the collection e.g. __DIR__ . '/users'
      */
     public function __construct(string $path)
     {
-        $this->createDirectoryIfNotExists($path);
+        if (! is_dir($path) || ! is_writable($path)) {
+            throw new DocumentStoreException('Path does not exist or is not writable');
+        }
        
         $this->path = $path;
     }

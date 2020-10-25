@@ -20,6 +20,8 @@ use DocumentStore\Exception\DocumentStoreException;
 
 class DocumentDatabaseTest extends TestCase
 {
+    use DocumentStoreTestTrait;
+
     public function testInsert()
     {
         $db = new DocumentDatabase($this->storage_path('books'));
