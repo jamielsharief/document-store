@@ -6,7 +6,13 @@ use DocumentStore\DocumentDatabase;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$store = new DocumentStore(__DIR__ . '/data/books');
+$path = __DIR__ . '/demo';
+if (! is_dir($path)) {
+    print "Creating directory {$path}\n";
+    mkdir($path);
+}
+
+$store = new DocumentStore($path);
 
 $document = new Document();
 $document->title = 'Patterns of Enterprise Application Architecture';
@@ -27,7 +33,7 @@ $result = $store->get('computing/programming/0321127420');
 print PHP_EOL . 'store:get' . PHP_EOL;
 print_r($result);
 
-$db = new DocumentDatabase(__DIR__ . '/data/database');
+$db = new DocumentDatabase($path);
 $db->insert($document);
 
 $id = $document->_id;
