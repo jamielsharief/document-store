@@ -18,10 +18,7 @@
     "autoload": {
         "psr-4": {
             "DocumentStore\\": "src/"
-        },
-        "files": [
-            "src/functions.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
