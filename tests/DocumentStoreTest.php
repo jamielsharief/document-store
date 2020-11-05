@@ -18,10 +18,17 @@ use DocumentStore\Document;
 use PHPUnit\Framework\TestCase;
 use DocumentStore\DocumentStore;
 use DocumentStore\Exception\NotFoundException;
+use DocumentStore\Exception\DocumentStoreException;
 
 class DocumentStoreTest extends TestCase
 {
     use DocumentStoreTestTrait;
+
+    public function testNotDirectory()
+    {
+        $this->expectException(DocumentStoreException::class);
+        new DocumentStore(sys_get_temp_dir() . '/' . uniqid());
+    }
 
     public function testSet(): void
     {
