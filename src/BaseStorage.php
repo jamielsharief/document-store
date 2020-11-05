@@ -14,8 +14,6 @@ declare(strict_types = 1);
 namespace DocumentStore;
 
 use BadMethodCallException;
-use RecursiveIteratorIterator;
-use RecursiveDirectoryIterator;
 use DocumentStore\Exception\NotFoundException;
 use DocumentStore\Exception\DocumentStoreException;
 
@@ -109,37 +107,6 @@ class BaseStorage
     public function has(string $id): bool
     {
         return file_exists($this->filename($id));
-    }
-
-    /**
-     * Recursively iterates through all files in a memory efficient manner
-     *
-     * @todo change all find methods from using list to all, files are returned in a different order so tests
-     * will break.
-     *
-     * @param string $path
-     * @return Generator|array
-     */
-    protected function all(string $path = '')
-    {
-        if (! is_dir($this->path . '/' . $path)) {
-            return [];
-        }
-
-        $rii = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($this->path . '/' . $path)
-        );
-
-        foreach ($rii as $file) {
-            if ($file->isDir()) {
-                continue;
-            }
-
-            $filename = ltrim(str_replace($this->path .'/', '', $file->getPathname()), '/');
-            if (substr($filename, -5) === '.json') {
-                yield substr($filename, 0, -5);
-            }
-        }
     }
 
     /**
