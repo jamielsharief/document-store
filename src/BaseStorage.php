@@ -325,8 +325,8 @@ class BaseStorage
      */
     protected function createDirectoryIfNotExists(string $directory): void
     {
-        if (! is_dir($directory)) {
-            mkdir($directory, 0775, true);
+        if (! is_dir($directory) && ! mkdir($directory, 0775, true)) {
+            throw new DocumentStoreException('Unable to create directory');
         }
     }
 
