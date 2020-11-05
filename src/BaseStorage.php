@@ -328,9 +328,6 @@ class BaseStorage
         if (! is_dir($directory)) {
             mkdir($directory, 0775, true);
         }
-        if (! is_writable($directory)) {
-            throw new DocumentStoreException($directory . ' is not writable');
-        }
     }
 
     /**
