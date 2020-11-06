@@ -1,2 +1,7 @@
 /tests export-ignore
+.coveralls.yml export-ignore
+.travis.yml export-ignore
+.php_cs
 demo.php export-ignore
+phpunit.xml.dist
+README.md export-ignore
